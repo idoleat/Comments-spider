@@ -16,7 +16,7 @@ For Youtube APIs, I will use the topic/keywords users gave to get a list of vide
 
 For Twitter APIs, uses can decide to share the reault they got or not. Twitter is a good place to share small stuff, so I choce twitter. Also, if you share the reaults, you are backing up at the same time. You don;t need to search again next time.
 
-##How users will inteact
+## How users will inteact
 1. Users have to authrize their twitter account to the applicaton first.(Optional)
 2. Two things to input:
 (1)The key words/topic you want to search
@@ -24,7 +24,7 @@ For Twitter APIs, uses can decide to share the reault they got or not. Twitter i
 3. User will get a list of the comments or information  concerning.
 4. Decide to share them or not.
 
-##Project timeline
+## Project timeline
 1. perposal:12/25
 2. first part(details above):1/4
 secand part:1/12
