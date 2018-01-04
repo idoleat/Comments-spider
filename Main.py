@@ -11,6 +11,16 @@ for num in range(0,5):
 	else:
 		keywords[num-1]=tempt
 		
-print("Searching....")
+print("Searching....")#I can add something interesting here to make the program juicy. Maybe a joke.
 print("Hey! Here is the stuff I found: ")
 print("	I haven't finish yet. HEHE")
+ShareIt = input("Do you want to share it on Twitter?(N/Y)")
+#Maybe I will change it to Facebook if output is too long.
+#The probability I will change to Facebook is 0.7
+if ShareIt=='Y':
+	print("successfully shared!")
+	print("Thanks for using this tool!")
+	print("You can find the source code on https://github.com/idoleat/Comments-spider")
+else:
+	print("Thanks for using this tool!")
+	print("You can find the source code on https://github.com/idoleat/Comments-spider")
