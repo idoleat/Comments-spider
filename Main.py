@@ -10,6 +10,7 @@ import google_auth_oauthlib.flow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 from google_auth_oauthlib.flow import InstalledAppFlow
+from oauth2client.tools import argparser
 
 
 # The CLIENT_SECRETS_FILE variable specifies the name of a file that contains
@@ -23,39 +24,53 @@ SCOPES = ['https://www.googleapis.com/auth/youtube.force-ssl']
 API_SERVICE_NAME = 'youtube'
 API_VERSION = 'v3'
 
-api_key = "ZQq3mvbjbcmGFP04OTCoRTLt"
-service = build('youtube', 'v3', developerKey=api_key)
 
+print ("---------------")
 print ("Welcome to the comment spider! You can use this tool to get more information from Youtube videos.")
 title = input("Please enter the title you want to search on Youtube: ")
 
-"""# Sample python code for search.list
-def remove_empty_kwargs(**kwargs):
-  good_kwargs = {}
-  if kwargs is not None:
-    for key, value in kwargs.iteritems():
-      if value:
-        good_kwargs[key] = value
-  return good_kwargs
+def youtube_search(options):
+  youtube = build('youtube', 'v3', developerKey="ZQq3mvbjbcmGFP04OTCoRTLt")
 
-def print_response(response):
-  print(response)
-
-def search_list_by_keyword(service, **kwargs):
-  # See full sample for function
-  kwargs = remove_empty_kwargs(**kwargs)
-
-  response = service.search().list(
-    **kwargs
+  # Call the search.list method to retrieve results matching the specified
+  # query term.
+  search_response = youtube.search().list(
+    q=options.q,
+    part="id,snippet",
+    maxResults=options.max_results
   ).execute()
 
-  return print_response(response)
+  videos = []
+  channels = []
+  playlists = []
 
-search_list_by_keyword(service,
-    part='snippet',
-    maxResults=25,
-    q=title,
-    type='')"""
+  # Add each result to the appropriate list, and then display the lists of
+  # matching videos, channels, and playlists.
+  for search_result in search_response.get("items", []):
+    if search_result["id"]["kind"] == "youtube#video":
+      videos.append("%s (%s)" % (search_result["snippet"]["title"],
+                                 search_result["id"]["videoId"]))
+    elif search_result["id"]["kind"] == "youtube#channel":
+      channels.append("%s (%s)" % (search_result["snippet"]["title"],
+                                   search_result["id"]["channelId"]))
+    elif search_result["id"]["kind"] == "youtube#playlist":
+      playlists.append("%s (%s)" % (search_result["snippet"]["title"],
+                                    search_result["id"]["playlistId"]))
+
+  print ("Videos:\n", "\n".join(videos), "\n")
+  print ("Channels:\n", "\n".join(channels), "\n")
+  print ("Playlists:\n", "\n".join(playlists), "\n")
+
+
+if __name__ == "__main__":
+  argparser.add_argument("--q", help=title, default="Google")
+  argparser.add_argument("--max-results", help="Max results", default=25)
+  args = argparser.parse_args()
+
+  try:
+    youtube_search(args)
+  except HttpError,e:
+    print ("An HTTP error %d occurred:\n%s" % (e.resp.status, e.content))
 
 
 print ("Please enter the keywords you want to search in the comments(type 'exit' to stop):")
