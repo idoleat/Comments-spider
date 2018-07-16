@@ -7,12 +7,9 @@ from oauth2client.tools import argparser
 # tab of
 #   https://cloud.google.com/console
 # Please ensure that you have enabled the YouTube Data API for your project.
-DEVELOPER_KEY = "ZQq3mvbjbcmGFP04OTCoRTLt"
-YOUTUBE_API_SERVICE_NAME = "youtube"
-YOUTUBE_API_VERSION = "v3"
 
 def youtube_search(options):
-  youtube = build("youtube", "v3",developerKey="ZQq3mvbjbcmGFP04OTCoRTLt")
+  youtube = build("youtube", "v3",developerKey="AIzaSyBgC5WJ4cUQPHiBmTLHx_SKD7A_5EOi5hs")
 
   # Call the search.list method to retrieve results matching the specified
   # query term.

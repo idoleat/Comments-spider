@@ -5,6 +5,7 @@ import google.oauth2.credentials
 import sys
 import subprocess
 subprocess.call('pip install --upgrade google-api-python-client',shell=True)
+print ("Checking Google API client installment.....")
 
 import google_auth_oauthlib.flow
 from googleapiclient.discovery import build
@@ -30,7 +31,7 @@ print ("Welcome to the comment spider! You can use this tool to get more informa
 title = input("Please enter the title you want to search on Youtube: ")
 
 def youtube_search(options):
-  youtube = build('youtube', 'v3', developerKey="ZQq3mvbjbcmGFP04OTCoRTLt")
+  youtube = build("youtube", "v3",developerKey="AIzaSyBgC5WJ4cUQPHiBmTLHx_SKD7A_5EOi5hs")
 
   # Call the search.list method to retrieve results matching the specified
   # query term.
@@ -57,20 +58,20 @@ def youtube_search(options):
       playlists.append("%s (%s)" % (search_result["snippet"]["title"],
                                     search_result["id"]["playlistId"]))
 
-  print ("Videos:\n", "\n".join(videos), "\n")
-  print ("Channels:\n", "\n".join(channels), "\n")
-  print ("Playlists:\n", "\n".join(playlists), "\n")
+  print("Videos:\n", "\n".join(videos), "\n")
+  print("Channels:\n", "\n".join(channels), "\n")
+  print("Playlists:\n", "\n".join(playlists), "\n")
 
 
 if __name__ == "__main__":
-  argparser.add_argument("--q", help=title, default="Google")
+  argparser.add_argument("--q", help="Search term", default=title)
   argparser.add_argument("--max-results", help="Max results", default=25)
   args = argparser.parse_args()
 
   try:
     youtube_search(args)
-  except HttpError,e:
-    print ("An HTTP error %d occurred:\n%s" % (e.resp.status, e.content))
+  except HttpError as e:
+    print("An HTTP error %d occurred:\n%s" % (e.resp.status, e.content))
 
 
 print ("Please enter the keywords you want to search in the comments(type 'exit' to stop):")
@@ -83,6 +84,8 @@ while True:
 		break
 	else:
 		keywords.append(tempt)
+
+
 		
 print("Searching....")#I can add something interesting here to make the program juicy. Maybe a joke.
 print("Hey! Here is the stuff I found: ")
